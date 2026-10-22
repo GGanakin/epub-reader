@@ -1,0 +1,12 @@
+services:
+  epub-reader:
+    build: .
+    image: epub-reader:latest
+    container_name: epub-reader
+    ports:
+      - "8765:8765"
+    volumes:
+      # BOOKS_DIR should point at the EPUB library on the host.
+      # The container runs as uid 1000 and needs write access here for in-app uploads.
+      - ${BOOKS_DIR:-./books}:/books
+    restart: unless-stopped

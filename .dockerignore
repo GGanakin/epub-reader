@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+data/
+examples/
+scripts/
+test-results/
+node_modules/
+.git/
+.gitignore
+server.log
+server.pid
+*.md

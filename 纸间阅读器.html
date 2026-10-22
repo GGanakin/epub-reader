@@ -1,0 +1,1147 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="paper">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' blob:; img-src data: blob:; font-src blob: data:; media-src blob:; frame-src 'self' blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f3ec">
+  <title>纸间 · EPUB 阅读器</title>
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiM2MjczNTYiLz48cGF0aCBkPSJNMzIgMTljLTctNS0xNi01LTIzLTJ2MzFjNy0zIDE2LTMgMjMgMiA3LTUgMTYtNSAyMy0yVjE3Yy03LTMtMTYtMy0yMyAyWm0wIDB2MzEiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2Y2ZjNlYyIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9zdmc+Cg==" type="image/svg+xml">
+  <style>
+@charset "UTF-8";
+:root{--bg:#f6f3ec;--surface:#eeece4;--text:#33392f;--muted:#818579;--line:#dcded2;--accent:#627356;--accent-ink:#fff;--hover:#e5e8db;--panel:#faf9f5;--shadow:0 16px 60px #26302018;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg);font-synthesis:none}
+:root[data-theme=light]{--bg:#fff;--surface:#f4f5f2;--text:#30372f;--muted:#7d837b;--line:#e1e5dd;--panel:#fff;--hover:#eaf0e5}
+:root[data-theme=green]{--bg:#e7eddf;--surface:#dce5d3;--text:#2e4031;--muted:#71806d;--line:#cbd6c3;--panel:#edf2e6;--hover:#d1dec8}
+:root[data-theme=dark]{--bg:#202620;--surface:#191f1a;--text:#d2d9c8;--muted:#929c8a;--line:#374235;--accent:#a4b78e;--accent-ink:#202620;--hover:#343e30;--panel:#293127;--shadow:0 16px 60px #0005}
+*{box-sizing:border-box}body{margin:0;height:100dvh;display:flex;overflow:hidden}button,input,select{font:inherit}button,a,input,select{-webkit-tap-highlight-color:transparent}button{cursor:pointer;color:inherit}button{border:0;background:none}button:disabled{opacity:.35;cursor:default}button:not(:disabled),a,input,select{touch-action:manipulation}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:4px}a{color:inherit}svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}button svg{pointer-events:none}h1,h2,h3,p{margin:0}button{transition:background .18s,color .18s}button:hover:not(:disabled){background:var(--hover)}[hidden]{display:none!important}.icon-defs{position:absolute;width:0;height:0;overflow:hidden}.eyebrow{font-size:10px;font-weight:600;letter-spacing:2.3px;color:var(--muted)}
+.sidebar{width:268px;flex:none;background:var(--surface);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:35px 22px 0;z-index:20}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;margin:0 9px 40px;font-family:"Songti SC","Noto Serif CJK SC",serif;font-size:27px;letter-spacing:5px}.brand-symbol{width:40px;height:44px;display:grid;place-items:center;border:1px solid var(--accent);border-radius:8px 8px 3px 3px;color:var(--accent)}.brand-symbol svg{width:25px;height:25px}.brand small{display:block;letter-spacing:1.4px;font:7px sans-serif;margin-top:6px;color:var(--muted)}.shelf-button{display:flex;align-items:center;gap:12px;width:100%;padding:13px 15px;font-size:14px;border-radius:6px;background:var(--hover);color:var(--accent)}.shelf-button span{margin-left:auto;font-size:11px}.current-book{margin:29px 12px 23px}.current-book h2{font-size:17px;line-height:1.6;margin:9px 0 4px;overflow-wrap:anywhere}.current-book p{font-size:12px;color:var(--muted)}#book-navigation{display:flex;flex-direction:column;min-height:0;flex:1}.tabs{display:flex;border-bottom:1px solid var(--line);flex:none}.tabs button{padding:12px 0;flex:1;font-size:13px;border-bottom:2px solid transparent}.tabs button[aria-selected=true]{border-bottom-color:var(--accent);color:var(--accent)}.tabs span{margin-left:4px;font-size:10px;color:var(--muted)}.nav-panel{overflow:auto;flex:1;padding:15px 0 22px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.search{display:flex;align-items:center;border:1px solid var(--line);border-radius:5px;margin:0 2px 14px;padding:0 10px;gap:7px;color:var(--muted)}.search span{font-size:23px}.search input{min-width:0;width:100%;padding:9px 0;border:0;outline:none;background:none;color:var(--text);font-size:12px}.toc-item{display:block;text-align:left;width:100%;font-size:13px;line-height:1.6;border-radius:4px;padding:11px 10px;border-left:2px solid transparent;overflow-wrap:anywhere}.toc-item.active{background:var(--hover);color:var(--accent);border-left-color:var(--accent)}.empty-marks{padding:22px 9px;color:var(--muted);font-size:12px;line-height:2}.bookmark-card{border-bottom:1px solid var(--line);position:relative;padding:8px 0}.bookmark-jump{text-align:left;display:block;width:100%;padding:10px 28px 10px 9px;border-radius:4px}.bookmark-jump strong{font-size:13px;display:block;line-height:1.6;overflow-wrap:anywhere}.bookmark-jump p{font-size:12px;margin:8px 0;color:var(--muted);overflow-wrap:anywhere}.bookmark-jump small{font-size:10px;color:var(--muted)}.delete-mark{position:absolute;right:0;top:14px;width:26px;height:26px;display:grid;place-items:center}.delete-mark svg{width:14px;height:14px}.sidebar-welcome{margin:auto 13px;color:var(--muted);padding-bottom:35px}.sidebar-welcome p{font:21px/2.1 "Songti SC","Noto Serif CJK SC",serif;letter-spacing:3px;margin:22px 0}.sidebar-welcome>span:last-child{font-size:7px;letter-spacing:1.9px}.fine-line{display:block;width:28px;border-top:1px solid var(--accent)}.sidebar-bottom{display:flex;align-items:center;gap:7px;padding:18px 3px;font-size:10px;color:var(--muted);border-top:1px solid var(--line);margin-top:auto;flex:none}.local-dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}.sidebar-bottom button{margin-left:auto;padding:5px;border-radius:3px}.sidebar-bottom svg{width:15px;height:15px;display:block}
+main{flex:1;min-width:0;display:flex;flex-direction:column}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:22px 36px;border-bottom:1px solid var(--line);height:88px;flex:none}.toolbar-title{display:flex;align-items:center;gap:15px;min-width:0}.toolbar-title>div{min-width:0}.toolbar h1{font-size:15px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:38vw}.toolbar-title span{display:block;font-size:10px;color:var(--muted);margin-top:5px}.toolbar-actions{display:flex;align-items:center;gap:12px;flex:none}.icon-button{height:36px;width:36px;display:inline-grid;place-items:center;border-radius:5px}.text-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;font-size:12px;padding:9px;border-radius:5px}.aa{font-family:Georgia,serif;font-size:21px;line-height:1}.appearance-button{gap:8px}.toolbar-divider{height:22px;border-left:1px solid var(--line);margin:0 3px}.primary-button{display:inline-flex;justify-content:center;align-items:center;gap:9px;background:var(--accent);color:var(--accent-ink);padding:13px 21px;border-radius:5px;font-size:13px;font-weight:500}.primary-button:hover:not(:disabled){background:var(--accent);filter:brightness(.92)}.primary-button.compact{padding:10px 14px;font-size:12px}.primary-button svg{width:16px;height:16px}
+.shelf-view{overflow:auto;padding:55px clamp(30px,6vw,100px) 24px;flex:1}.shelf-heading h2{font-family:"Songti SC","Noto Serif CJK SC","SimSun",serif;font-size:clamp(34px,3.3vw,49px);font-weight:400;line-height:1.48;letter-spacing:4px;margin:16px 0}.shelf-heading h2 span{color:var(--accent)}.shelf-heading p{font-size:12px;color:var(--muted);letter-spacing:.6px}.empty-library{margin-top:36px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:36px 4%;display:flex;justify-content:center;align-items:center;gap:clamp(30px,6vw,110px);min-height:340px}.book-illustration{position:relative;width:198px;height:264px;flex:none;transform:rotate(-7deg);margin:8px 8px 10px}.illustration-back{position:absolute;inset:12px -9px -10px 10px;background:#d9cdb1;border-radius:2px 7px 7px 2px;transform:rotate(9deg);box-shadow:8px 15px 22px #3a422216}.illustration-book{position:absolute;inset:0;background:#697b58;color:#f3eedc;padding:24px 27px;border-radius:2px 6px 6px 2px;box-shadow:inset 7px 0 12px #24371d2b,inset 10px 0 0 #fff1,7px 10px 18px #3a422224;display:flex;flex-direction:column;border:1px solid #fff2}.illustration-label{font:7px/1.6 Georgia,serif;letter-spacing:1.7px}.illustration-title{font:24px/1.6 "Songti SC",serif;letter-spacing:5px;margin-top:19px}.illustration-book svg{position:absolute;right:20px;bottom:36px;width:49px;height:70px;opacity:.3;stroke-width:.8;transform:rotate(10deg)}.illustration-bottom{font-size:6px;letter-spacing:2px;margin-top:auto;opacity:.7}.empty-copy h3{font:26px/1.6 "Songti SC","Noto Serif CJK SC",serif;font-weight:400;letter-spacing:2px;margin:13px 0}.empty-copy p{font-size:12px;line-height:2.1;color:var(--muted);margin-bottom:21px}.file-hint{display:block;font-size:9px;color:var(--muted);margin-top:13px}.section-heading{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);margin-top:40px;padding-bottom:16px;gap:10px}.section-heading h3{font-size:14px;font-weight:500}.section-heading h3 span{color:var(--muted);font-size:11px;margin-left:8px}.section-heading>span{font-size:10px;color:var(--muted)}.book-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:30px 26px;margin:26px 0}.book-card{text-align:left;padding:0;border-radius:5px;min-width:0}.book-card:hover:not(:disabled){background:transparent}.book-cover{aspect-ratio:3/4;max-height:250px;background:var(--cover);color:#f9f4e7;padding:25px 20px;border-radius:2px 7px 7px 2px;box-shadow:inset 6px 0 0 #0001,inset 8px 0 0 #fff1,4px 7px 10px #29322012;display:flex;flex-direction:column;transition:transform .2s;position:relative;overflow:hidden}.book-card:hover .book-cover{transform:translateY(-5px)}.book-cover:after{content:"";position:absolute;width:130px;height:130px;border:1px solid #fff2;border-radius:50%;right:-35px;bottom:25px;box-shadow:0 0 0 15px #ffffff08,0 0 0 30px #ffffff05}.book-cover strong{font:22px/1.6 "Songti SC",serif;letter-spacing:2px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;position:relative;z-index:1}.book-cover span{font-size:10px;opacity:.75;margin-top:15px}.book-cover small{font:7px Georgia,serif;letter-spacing:3px;margin-top:auto}.book-card h3{font-size:13px;line-height:1.7;margin:14px 0 5px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.book-card>p{font-size:10px;color:var(--muted)}.book-card-progress{height:2px;background:var(--line);margin-top:12px}.book-card-progress span{display:block;height:100%;background:var(--accent)}.shelf-footnote{display:flex;justify-content:center;align-items:center;gap:8px;margin:24px 0 0;font-size:10px;color:var(--muted);flex-wrap:wrap}.shelf-footnote>span{color:var(--accent)}.shelf-footnote button{text-decoration:underline;text-underline-offset:4px;font-size:10px;padding:4px}
+.reader-view{display:flex;flex-direction:column;flex:1;min-height:0}.chapter-header{display:flex;justify-content:space-between;gap:20px;padding:21px 44px 14px;color:var(--muted);font-size:10px}.chapter-header>span:first-child{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.chapter-header>span:last-child{flex:none}.reader-container{position:relative;flex:1;min-height:0}.reader-container iframe{border:0;width:100%;height:100%;display:block;background:var(--bg);color-scheme:light}.chapter-loading{position:absolute;inset:0;background:var(--bg);display:grid;place-items:center;font:18px "Songti SC",serif;color:var(--muted)}.reader-footer{border-top:1px solid var(--line);height:77px;display:flex;align-items:center;justify-content:space-between;gap:22px;padding:14px 36px;flex:none}.reader-footer button{flex:none}.reader-footer svg{width:15px;height:15px}.progress-control{width:350px;max-width:55%}.progress-control label{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:8px}.progress-control input{display:block}.appearance-panel{position:fixed;right:25px;top:78px;width:326px;border:1px solid var(--line);border-radius:10px;padding:26px;background:var(--panel);box-shadow:var(--shadow);z-index:40;max-height:calc(100dvh - 96px);overflow:auto}.panel-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:25px}.panel-heading h2{font:22px "Songti SC",serif;font-weight:400;margin-top:9px}.panel-heading .icon-button{margin-right:-7px}fieldset{border:0;padding:0;margin:0}legend,.setting-label{font-size:12px;margin-bottom:14px}.theme-options{display:flex;justify-content:space-between;gap:8px}.theme-option{display:flex;flex-direction:column;align-items:center;gap:8px;padding:5px;font-size:10px;color:var(--muted);border-radius:5px}.swatch{height:38px;width:38px;border-radius:50%;border:1px solid #0001}.swatch.paper{background:#f6f3ec}.swatch.light{background:#fff}.swatch.green{background:#e7eddf}.swatch.dark{background:#202620}.theme-option.active .swatch{outline:2px solid var(--accent);outline-offset:3px}.theme-option.active{color:var(--text)}.custom-colors{display:flex;gap:20px;margin:20px 0 26px}.custom-colors label{font-size:11px;display:flex;align-items:center;justify-content:space-between;gap:9px;flex:1;color:var(--muted)}input[type=color]{width:25px;height:25px;padding:0;border:0;background:transparent;cursor:pointer}input[type=color]::-webkit-color-swatch-wrapper{padding:1px}input[type=color]::-webkit-color-swatch{border-radius:4px;border:1px solid var(--line)}.setting-label{display:flex;justify-content:space-between;margin:24px 0 12px}.setting-label output{font-size:11px;color:var(--muted)}input[type=range]{width:100%;height:4px;accent-color:var(--accent);cursor:pointer;margin:3px 0 8px}select{width:100%;padding:10px;background:var(--bg);border:1px solid var(--line);color:var(--text);border-radius:5px;font-size:12px}.settings-note{font-size:10px;line-height:2;color:var(--muted);border-top:1px solid var(--line);margin-top:25px;padding-top:18px}.reset-button{display:block;font-size:11px;color:var(--accent);margin:9px auto -8px}
+dialog{border:1px solid var(--line);border-radius:12px;padding:28px;background:var(--panel);color:var(--text);width:410px;max-width:calc(100vw - 36px);box-shadow:var(--shadow)}dialog::backdrop{background:#161f1855;backdrop-filter:blur(3px)}dialog .panel-heading{margin-bottom:15px}dialog p{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:22px}dialog label{font-size:12px;display:block;margin-bottom:10px}dialog input{width:100%;padding:12px;border:1px solid var(--line);border-radius:5px;background:var(--bg);color:var(--text);font-size:12px}.dialog-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:24px}.toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:13px 22px;border-radius:8px;box-shadow:var(--shadow);font-size:12px;z-index:100;max-width:90vw;text-align:center;line-height:1.7}.drop-overlay{position:fixed;inset:15px;background:var(--panel);opacity:.97;border:2px dashed var(--accent);border-radius:14px;z-index:80;display:flex;justify-content:center;align-items:center;flex-direction:column;pointer-events:none}.drop-overlay svg{width:65px;height:65px;color:var(--accent);margin-bottom:25px}.drop-overlay h2{font:30px "Songti SC",serif;font-weight:400}.drop-overlay p{font-size:13px;color:var(--muted);margin-top:20px}.sidebar-collapsed .sidebar,.focus-mode .sidebar{display:none}.focus-mode .toolbar{height:64px;border-color:transparent}.focus-mode .toolbar-title>div,.focus-mode #import-button,.focus-mode .toolbar-divider{display:none}.focus-mode .toolbar-actions{margin-left:auto}.focus-mode .chapter-header{padding-top:8px}.focus-mode .reader-footer{height:63px}.scrim{display:none}
+@media(min-width:1600px){.shelf-view{padding-top:75px}.shelf-heading h2{font-size:56px}.empty-library{margin-top:55px;padding:50px}.book-illustration{width:215px;height:285px}.illustration-title{font-size:27px}}
+@media(max-width:1100px){.sidebar{width:232px;padding-left:16px;padding-right:16px}.toolbar{padding:18px 22px}.toolbar-actions{gap:6px}.button-label{display:none}.shelf-view{padding:35px 32px 20px}.empty-library{gap:30px;padding:30px 0}.book-illustration{width:164px;height:232px}.illustration-book{padding:22px}.illustration-title{font-size:21px}.empty-copy h3{font-size:23px}.reader-footer{padding:14px 22px}}
+@media(max-width:760px){.sidebar{display:none;position:fixed;left:0;top:0;bottom:0;width:270px;box-shadow:var(--shadow)}.sidebar-open .sidebar{display:flex}.sidebar-open .scrim{display:block;position:fixed;inset:0;background:#131e1655;z-index:15}.toolbar{height:73px;padding:14px 16px;gap:4px}.toolbar-title{gap:5px}.toolbar h1{max-width:30vw;font-size:13px}.toolbar-title span{font-size:9px}.toolbar-actions{gap:2px}.toolbar-divider,#focus-button{display:none}.icon-button{width:32px;height:32px}.primary-button.compact{padding:9px;font-size:11px}.primary-button.compact svg{display:none}.shelf-view{padding:35px 24px 20px}.shelf-heading h2{font-size:36px;letter-spacing:3px}.shelf-heading p{font-size:11px}.empty-library{margin-top:28px;gap:25px;padding:35px 0}.book-illustration{width:137px;height:202px;margin-left:0}.illustration-book{padding:17px 18px}.illustration-label{font-size:6px;letter-spacing:1px}.illustration-title{font-size:18px;letter-spacing:3px;margin-top:16px}.illustration-bottom{font-size:5px;letter-spacing:1px}.empty-copy .eyebrow{font-size:9px;letter-spacing:1px}.empty-copy h3{font-size:20px;letter-spacing:1px}.empty-copy p{font-size:10px;line-height:2}.empty-copy .primary-button{padding:11px 12px;font-size:11px}.file-hint{font-size:8px;line-height:1.8}.appearance-panel{top:68px;right:12px;width:min(326px,calc(100vw - 24px));max-height:calc(100dvh - 82px)}.chapter-header{padding:16px 24px 10px;font-size:9px;gap:12px}.reader-footer{padding:12px 12px;gap:8px;height:72px}.reader-footer button{font-size:11px;padding:6px;gap:2px}.progress-control{max-width:53%}.progress-control label{font-size:9px}.section-heading>span{display:none}.book-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 20px}.book-cover{padding:22px 16px}.book-cover strong{font-size:20px}.shelf-footnote{font-size:9px;line-height:1.8}}
+@media(max-width:380px){.empty-library{gap:19px}.book-illustration{width:116px;height:184px}.illustration-title{font-size:16px}.empty-copy h3{font-size:18px}.shelf-view{padding-left:18px;padding-right:18px}.toolbar-title span{display:none}.toolbar h1{max-width:22vw}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.illustration-title{font-size:22px;letter-spacing:3px}
+@media(max-width:1100px){.illustration-title{font-size:20px;letter-spacing:2px}}
+@media(max-width:760px){.illustration-title{font-size:17px;letter-spacing:1px}}
+@media(max-width:380px){.illustration-title{font-size:15px;letter-spacing:0}}
+
+/* Keep the paper palette and typography; make the reading controls touch friendly. */
+.library-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:24px;color:var(--muted);font-size:12px}
+.library-tools button{flex:none;color:var(--accent);min-height:44px}
+.current-book h2,.current-book p{display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.current-book h2{-webkit-line-clamp:3}
+.current-book p{-webkit-line-clamp:2}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.close-sidebar,.exit-focus,.settings-scrim{display:none}
+.sidebar,.shelf-view,.nav-panel,.appearance-panel{overscroll-behavior:contain}
+@media(max-width:760px){
+  body{height:100vh;height:100dvh}
+  main{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+  .toolbar{height:calc(64px + env(safe-area-inset-top));padding:calc(10px + env(safe-area-inset-top)) 12px 10px;gap:8px}
+  .toolbar-title{flex:1;gap:6px;overflow:hidden}
+  .toolbar-title>div{flex:1}
+  .toolbar h1{max-width:none;font-size:14px}
+  .toolbar-title span{display:none}
+  .toolbar-actions{gap:0}
+  .icon-button{width:44px;height:44px;flex:none}
+  .text-button,.primary-button,.primary-button.compact{min-height:44px}
+  .appearance-button{width:44px;padding:8px}
+  .primary-button.compact{padding:10px 13px;font-size:13px;white-space:nowrap}
+  body:not(.is-reading) #bookmark-button,body:not(.is-reading) #focus-button{display:none}
+  .is-reading #import-button{display:none}
+  .is-reading #focus-button{display:inline-grid}
+  .sidebar,.sidebar-collapsed .sidebar{width:min(320px,calc(100vw - 44px));padding:calc(24px + env(safe-area-inset-top)) 20px env(safe-area-inset-bottom) max(20px,env(safe-area-inset-left))}
+  .sidebar-open .sidebar{display:flex}
+  .close-sidebar{display:inline-grid;position:absolute;top:calc(12px + env(safe-area-inset-top));right:8px}
+  .brand{margin:0 0 26px}
+  .current-book{margin:20px 10px 16px}
+  .current-book h2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .toc-item,.tabs button{min-height:44px;font-size:14px}
+  .search input,select,dialog input{font-size:16px;min-height:44px}
+  .sidebar-bottom{padding-top:8px;padding-bottom:8px;font-size:11px}
+  .sidebar-bottom button,.delete-mark{width:44px;height:44px}
+  .bookmark-jump{padding-right:44px}
+  .shelf-view{padding:28px 22px calc(24px + env(safe-area-inset-bottom))}
+  .shelf-heading h2{font-size:32px;line-height:1.45;margin:12px 0}
+  .shelf-heading p,.empty-copy p{font-size:13px;line-height:1.9;letter-spacing:0}
+  .empty-library{padding:28px 0;gap:24px;min-height:0}
+  .empty-copy{min-width:0;flex:1}
+  .empty-copy h3{font-size:21px}
+  .empty-copy .primary-button{font-size:13px;padding:12px 14px}
+  .file-hint{font-size:11px}
+  .book-illustration{width:110px;height:175px;margin-right:0}
+  .illustration-book{padding:15px}
+  .illustration-title{font-size:15px;letter-spacing:0}
+  .illustration-label{font-size:5px}
+  .book-card h3{font-size:14px}
+  .book-card>p,.shelf-footnote{font-size:12px}
+  .shelf-footnote button{min-height:44px;font-size:12px}
+  .chapter-header{padding:8px 22px 6px;font-size:11px;min-height:30px;flex:none}
+  #saved-status{display:none}
+  .reader-footer{height:calc(76px + env(safe-area-inset-bottom));padding:8px 8px calc(8px + env(safe-area-inset-bottom));gap:8px}
+  .reader-footer button{font-size:12px;padding:6px;gap:0;min-height:44px}
+  .progress-control{flex:1;width:auto;max-width:none;min-width:0}
+  .progress-control label{font-size:10px;margin:0;gap:6px;white-space:nowrap}
+  input[type=range]{height:32px;margin:0}
+  .settings-scrim{display:block;position:fixed;inset:0;background:#131e1655;z-index:35}
+  .appearance-panel{top:auto;bottom:0;left:0;right:0;width:100%;max-height:85vh;max-height:85dvh;border-radius:18px 18px 0 0;padding:22px max(24px,env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom)) max(24px,env(safe-area-inset-left))}
+  .panel-heading{margin-bottom:18px}
+  .panel-heading h2{font-size:22px}
+  .theme-option{min-width:52px;font-size:12px}
+  .setting-label,legend{font-size:14px;margin-bottom:8px}
+  .setting-label{margin-top:16px}
+  .custom-colors{margin:16px 0;gap:16px}
+  .custom-colors label{font-size:12px}
+  input[type=color]{width:44px;height:44px}
+  .settings-note{font-size:12px;margin-top:20px;padding-top:14px}
+  .reset-button{font-size:13px}
+  dialog{padding:22px;max-height:calc(100dvh - 32px);overflow:auto}
+  .toast{bottom:calc(90px + env(safe-area-inset-bottom));width:max-content;max-width:calc(100vw - 32px)}
+  .focus-mode .toolbar,.focus-mode .chapter-header,.focus-mode .reader-footer{display:none}
+  .focus-mode main{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+  .focus-mode .exit-focus{display:block;position:fixed;right:calc(16px + env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom));min-height:44px;padding:10px 16px;background:var(--panel);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);font-size:13px;z-index:10}
+}
+@media(max-width:359px){
+  .toolbar{padding-left:6px;padding-right:6px;gap:0}
+  .toolbar-title{gap:0}
+  .shelf-view{padding-left:18px;padding-right:18px}
+  .empty-library{gap:18px}
+  .book-illustration{width:88px;height:157px}
+  .illustration-book{padding:12px 10px}
+  .illustration-label{letter-spacing:.5px}
+  .illustration-bottom{letter-spacing:0}
+  .empty-copy h3{font-size:19px}
+  .progress-control label{font-size:9px}
+}
+@media(max-height:500px) and (max-width:960px){
+  .toolbar{height:52px;padding-top:4px;padding-bottom:4px}
+  .chapter-header{display:none}
+  .reader-footer{height:calc(60px + env(safe-area-inset-bottom));padding-top:4px;padding-bottom:calc(4px + env(safe-area-inset-bottom))}
+}
+
+</style>
+
+</head>
+<body>
+  <svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5c-3-2-7-2-10-1v15c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1Zm0 0v15"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-mark" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m14 6-6 6 6 6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-focus" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 15v6h16v-6"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 3C8 2 2 8 5 15c4 8 16 1 15-12ZM4 21 16 9"/></symbol>
+  </defs></svg>
+
+  <aside class="sidebar" id="sidebar" aria-label="书籍导航">
+    <button id="close-sidebar" class="icon-button close-sidebar" aria-label="关闭导航"><svg><use href="#i-close"/></svg></button>
+    <a class="brand" href="#" id="brand"><span class="brand-symbol"><svg><use href="#i-book"/></svg></span><span>纸间<small>A LITTLE TIME TO READ</small></span></a>
+    <button id="shelf-button" class="shelf-button"><svg><use href="#i-book"/></svg>我的书架<span id="book-count">0</span></button>
+    <section id="book-navigation" hidden>
+      <div class="current-book"><span class="eyebrow">正在阅读</span><h2 id="sidebar-title"></h2><p id="sidebar-author"></p></div>
+      <div class="tabs" role="tablist" aria-label="导航类型">
+        <button id="toc-tab" role="tab" aria-selected="true" aria-controls="toc-panel">目录</button>
+        <button id="marks-tab" role="tab" aria-selected="false" aria-controls="marks-panel">书签 <span id="mark-count">0</span></button>
+      </div>
+      <div id="toc-panel" class="nav-panel" role="tabpanel" aria-labelledby="toc-tab"><label class="search"><span>⌕</span><input id="toc-search" placeholder="查找章节…" aria-label="查找章节"></label><nav id="toc-list" aria-label="章节目录"></nav></div>
+      <div id="marks-panel" class="nav-panel" role="tabpanel" aria-labelledby="marks-tab" hidden><div id="marks-list"></div></div>
+    </section>
+    <div id="sidebar-welcome" class="sidebar-welcome"><span class="fine-line"></span><p>书页之间，<br>安放片刻日常。</p><span>YOUR QUIET READING CORNER</span></div>
+    <div class="sidebar-bottom"><span class="local-dot"></span><span id="storage-label">服务书架 · 随时阅读</span><button id="backup-button" title="导出阅读记录" aria-label="导出阅读记录"><svg><use href="#i-upload"/></svg></button></div>
+  </aside>
+  <button class="scrim" id="sidebar-scrim" aria-label="关闭导航" hidden></button>
+
+  <main id="main-content">
+    <header class="toolbar">
+      <div class="toolbar-title"><button class="icon-button" id="menu-button" title="显示或隐藏侧栏" aria-label="显示或隐藏侧栏" aria-controls="sidebar" aria-expanded="false"><svg><use href="#i-menu"/></svg></button><div><h1 id="view-title">我的书架</h1><span id="view-subtitle">让阅读，慢下来。</span></div></div>
+      <div class="toolbar-actions">
+        <button class="icon-button" id="bookmark-button" title="添加书签（B）" aria-label="添加书签" disabled><svg><use href="#i-mark"/></svg></button>
+        <button class="text-button appearance-button" id="appearance-button" aria-expanded="false" aria-controls="appearance-panel" title="阅读设置"><span class="aa">Aa</span><span class="button-label">阅读设置</span></button>
+        <button class="icon-button" id="focus-button" title="专注模式（F），Esc 退出" aria-label="切换专注模式" disabled><svg><use href="#i-focus"/></svg></button>
+        <span class="toolbar-divider"></span><button class="primary-button compact" id="import-button"><svg><use href="#i-plus"/></svg><span>导入书籍</span></button>
+      </div>
+    </header>
+
+    <section class="shelf-view" id="shelf-view">
+      <div class="shelf-heading"><span class="eyebrow">THE READING ROOM</span><h2>给自己，<br>一页的时间<span>。</span></h2><p>从一本好书开始，让世界暂时安静下来。</p></div>
+      <div class="library-tools"><span>本浏览器 · 阅读记录独立保存</span><button id="refresh-library" class="text-button">刷新书架</button></div>
+      <div id="empty-library" class="empty-library">
+        <div class="book-illustration" aria-hidden="true"><div class="illustration-back"></div><div class="illustration-book"><span class="illustration-label">THE ART OF<br>SLOW LIVING</span><span class="illustration-title">阅读<br>是一座<br>随身的花园</span><svg><use href="#i-leaf"/></svg><span class="illustration-bottom">纸 间 · 阅 读 时 光</span></div><span class="illustration-shadow"></span></div>
+        <div class="empty-copy"><span class="eyebrow">你的私人书架</span><h3>下一段旅程，<br>从这里翻开。</h3><p id="import-description">选择手机或电脑中的 EPUB 文件。<br>书籍存入服务书架，随时打开阅读。</p><button class="primary-button" id="first-import"><svg><use href="#i-plus"/></svg>导入第一本书</button><span class="file-hint">支持 EPUB 2 / 3 · 单本最大 100 MB</span></div>
+      </div>
+      <section id="library-section" hidden><div class="section-heading"><h3>全部书籍 <span id="shelf-count"></span></h3><span>每一次翻开，都是新的相遇</span></div><div id="book-grid" class="book-grid"></div></section>
+      <div class="shelf-footnote"><span>✦</span> 不同设备、不同浏览器的进度与书签互不影响。<button id="restore-button">导入阅读记录</button></div>
+    </section>
+
+    <section id="reader-view" class="reader-view" hidden aria-label="阅读区域">
+      <div class="chapter-header"><span id="chapter-label"></span><span id="saved-status" role="status">阅读进度自动保存</span></div>
+      <div class="reader-container"><iframe id="reader-frame" title="电子书正文" sandbox="allow-same-origin"></iframe><div id="chapter-loading" class="chapter-loading" hidden>正在翻开书页…</div></div>
+      <footer class="reader-footer"><button class="text-button" id="previous-button"><svg><use href="#i-left"/></svg><span>上一章</span></button><div class="progress-control"><label for="chapter-progress"><span id="progress-label">本章 0%</span><span id="overall-progress"></span></label><input id="chapter-progress" type="range" min="0" max="1000" value="0" aria-label="当前章节阅读进度"></div><button class="text-button" id="next-button"><span>下一章</span><svg><use href="#i-right"/></svg></button></footer>
+    </section>
+  </main>
+  <button id="exit-focus" class="exit-focus" hidden>退出专注</button>
+  <button id="settings-scrim" class="settings-scrim" aria-label="关闭阅读设置" hidden></button>
+
+  <section class="appearance-panel" id="appearance-panel" aria-label="阅读设置" hidden>
+    <div class="panel-heading"><div><span class="eyebrow">MAKE IT YOURS</span><h2>舒适，刚刚好。</h2></div><button id="close-settings" class="icon-button" aria-label="关闭阅读设置"><svg><use href="#i-close"/></svg></button></div>
+    <fieldset><legend>阅读配色</legend><div class="theme-options"><button data-theme="paper" class="theme-option"><span class="swatch paper"></span>纸色</button><button data-theme="light" class="theme-option"><span class="swatch light"></span>明亮</button><button data-theme="green" class="theme-option"><span class="swatch green"></span>青苔</button><button data-theme="dark" class="theme-option"><span class="swatch dark"></span>夜间</button></div></fieldset>
+    <div class="custom-colors"><label>背景颜色<input id="background-color" type="color" value="#f6f3ec"></label><label>文字颜色<input id="text-color" type="color" value="#33392f"></label></div>
+    <label class="setting-label" for="font-size">文字大小<output id="font-size-value">20 px</output></label><input type="range" id="font-size" min="14" max="36" value="20">
+    <label class="setting-label" for="line-height">行间距<output id="line-height-value">1.9</output></label><input type="range" id="line-height" min="1.3" max="2.6" value="1.9" step="0.1">
+    <label class="setting-label" for="reading-width">正文宽度<output id="reading-width-value">760 px</output></label><input type="range" id="reading-width" min="480" max="1100" value="760" step="20">
+    <label class="setting-label" for="font-family">阅读字体</label><select id="font-family"><option value="serif">宋体 / 衬线体</option><option value="sans">黑体 / 无衬线体</option><option value="original">书籍原始字体</option></select>
+    <div class="settings-note">配色、字号与阅读位置会自动记住。<br>← → 切换章节 · B 添加书签 · F 专注阅读</div><button class="text-button reset-button" id="reset-settings">恢复默认设置</button>
+  </section>
+
+  <dialog id="bookmark-dialog"><form id="bookmark-form"><div class="panel-heading"><h2>留住这一页</h2><button type="button" class="icon-button" id="cancel-bookmark" aria-label="取消"><svg><use href="#i-close"/></svg></button></div><p id="bookmark-location"></p><label for="bookmark-note">书签备注</label><input id="bookmark-note" maxlength="200" placeholder="为这次停留写一句话（可选）"><div class="dialog-actions"><button type="button" id="cancel-bookmark-bottom" class="text-button">取消</button><button type="submit" class="primary-button">保存书签</button></div></form></dialog>
+  <div id="drop-overlay" class="drop-overlay" hidden><svg><use href="#i-book"/></svg><h2>松开，翻开一本新书。</h2><p>支持 EPUB 格式</p></div>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <input id="file-input" type="file" accept=".epub,application/epub+zip" multiple hidden>
+  <input id="backup-input" type="file" accept=".json,application/json" hidden>
+<script>
+"use strict";
+
+// The offline edition uses only browser APIs. No fetch, CDN, server, or package install.
+(() => {
+  const LIMIT = 32 * 1024 * 1024;
+  const names = (root, name) => Array.from(root.getElementsByTagNameNS("*", name));
+  const textOf = node => node?.textContent.trim() || "";
+  const fail = message => { throw new Error(message); };
+  function splitHref(href) {
+    const index = href.indexOf("#");
+    return index < 0 ? [href, ""] : [href.slice(0, index), href.slice(index)];
+  }
+  function resolve(base, href) {
+    if (/^[a-z][a-z\d+.-]*:/i.test(href) || href.startsWith("//")) fail("书籍引用了外部资源。");
+    const [raw, hash] = splitHref(href);
+    if (!raw) return splitHref(base)[0] + hash;
+    let decoded;
+    try { decoded = decodeURIComponent(raw.split("?")[0]); } catch { decoded = raw; }
+    if (decoded.startsWith("/") || decoded.includes("\\") || decoded.includes("\0")) fail("EPUB 内部路径无效。");
+    const output = splitHref(base)[0].split("/").slice(0, -1);
+    for (const part of decoded.split("/")) {
+      if (part === "..") { if (!output.length) fail("EPUB 内部路径无效。"); output.pop(); }
+      else if (part && part !== ".") output.push(part);
+    }
+    return output.join("/") + hash;
+  }
+
+  const crcTable = Array.from({ length: 256 }, (_, n) => {
+    for (let i = 0; i < 8; i++) n = n & 1 ? 0xedb88320 ^ (n >>> 1) : n >>> 1;
+    return n >>> 0;
+  });
+  function crc32(bytes) {
+    let value = 0xffffffff;
+    for (const byte of bytes) value = crcTable[(value ^ byte) & 255] ^ (value >>> 8);
+    return (value ^ 0xffffffff) >>> 0;
+  }
+
+  class Zip {
+    constructor(buffer) {
+      this.buffer = buffer;
+      this.entries = new Map();
+      const view = new DataView(buffer);
+      if (view.byteLength < 22) fail("文件不是有效的 EPUB 压缩包。");
+      let end = -1;
+      for (let i = view.byteLength - 22; i >= Math.max(0, view.byteLength - 65557); i--) {
+        if (view.getUint32(i, true) === 0x06054b50 && i + 22 + view.getUint16(i + 20, true) === view.byteLength) { end = i; break; }
+      }
+      if (end < 0) fail("EPUB 不完整，找不到文件目录。");
+      const count = view.getUint16(end + 10, true);
+      let pos = view.getUint32(end + 16, true), total = 0;
+      if (view.getUint16(end + 4, true) || view.getUint16(end + 6, true) || count > 15000 || count === 65535) fail("暂不支持分卷、ZIP64 或过大的 EPUB。");
+      for (let i = 0; i < count; i++) {
+        if (pos + 46 > end || view.getUint32(pos, true) !== 0x02014b50) fail("EPUB 文件目录已损坏。");
+        const flags = view.getUint16(pos + 8, true), method = view.getUint16(pos + 10, true);
+        const crc = view.getUint32(pos + 16, true), compressed = view.getUint32(pos + 20, true), size = view.getUint32(pos + 24, true);
+        const length = view.getUint16(pos + 28, true), extra = view.getUint16(pos + 30, true), comment = view.getUint16(pos + 32, true);
+        const offset = view.getUint32(pos + 42, true);
+        if (pos + 46 + length + extra + comment > end) fail("EPUB 目录长度无效。");
+        let name = new TextDecoder("utf-8").decode(new Uint8Array(buffer, pos + 46, length));
+        // Honor the Info-ZIP Unicode Path extra field used by some older EPUB tools.
+        for (let at = pos + 46 + length, stop = at + extra; at + 4 <= stop;) {
+          const tag = view.getUint16(at, true), len = view.getUint16(at + 2, true);
+          if (at + 4 + len > stop) break;
+          if (tag === 0x7075 && len >= 5 && view.getUint8(at + 4) === 1 && view.getUint32(at + 5, true) === crc32(new Uint8Array(buffer, pos + 46, length))) name = new TextDecoder().decode(new Uint8Array(buffer, at + 9, len - 5));
+          at += 4 + len;
+        }
+        total += size;
+        if (flags & 1) fail("这本书包含加密文件，无法直接读取。");
+        if (size > LIMIT || total > 400 * 1024 * 1024) fail("书籍解压后过大（单资源 32 MB，全书 400 MB）。");
+        if (this.entries.has(name)) fail("EPUB 含重复文件名。");
+        this.entries.set(name, { offset, size, compressed, method, crc });
+        pos += 46 + length + extra + comment;
+      }
+    }
+
+    async read(path) {
+      const entry = this.entries.get(path);
+      if (!entry) fail(`书籍缺少文件：${path}`);
+      const view = new DataView(this.buffer), at = entry.offset;
+      if (at + 30 > view.byteLength || view.getUint32(at, true) !== 0x04034b50) fail("EPUB 文件头已损坏。");
+      const start = at + 30 + view.getUint16(at + 26, true) + view.getUint16(at + 28, true);
+      if (start + entry.compressed > view.byteLength) fail("EPUB 资源不完整。");
+      const compressed = new Uint8Array(this.buffer, start, entry.compressed);
+      let result;
+      if (entry.method === 0) result = compressed;
+      else if (entry.method === 8) {
+        let inflater;
+        try { inflater = new DecompressionStream("deflate-raw"); }
+        catch { fail("当前浏览器不支持 EPUB 解压，请使用较新版本的 Windows Edge 或 Chrome。"); }
+        const reader = new Blob([compressed]).stream().pipeThrough(inflater).getReader();
+        const chunks = []; let length = 0;
+        try {
+          while (true) {
+            const { value, done } = await reader.read(); if (done) break;
+            length += value.length;
+            if (length > LIMIT || length > entry.size) { await reader.cancel(); fail("EPUB 解压大小不符，文件可能已损坏。"); }
+            chunks.push(value);
+          }
+        } finally { reader.releaseLock(); }
+        result = new Uint8Array(length); let offset = 0;
+        for (const chunk of chunks) { result.set(chunk, offset); offset += chunk.length; }
+      } else fail("此 EPUB 使用了不支持的压缩方式。");
+      if (result.length !== entry.size || crc32(result) !== entry.crc) fail(`书籍文件校验失败：${path}`);
+      return result;
+    }
+
+    async text(path) {
+      const bytes = await this.read(path);
+      if (bytes[0] === 0xff && bytes[1] === 0xfe) return new TextDecoder("utf-16le").decode(bytes);
+      if (bytes[0] === 0xfe && bytes[1] === 0xff) return new TextDecoder("utf-16be").decode(bytes);
+      const prolog = new TextDecoder().decode(bytes.slice(0, 250));
+      const encoding = prolog.match(/<\?xml[^>]*encoding=["']([^"']+)["']/i)?.[1] || "utf-8";
+      try { return new TextDecoder(encoding).decode(bytes); } catch { return new TextDecoder().decode(bytes); }
+    }
+
+    async xml(path) {
+      const text = await this.text(path);
+      if (/<!ENTITY/i.test(text)) fail("不支持带 XML 实体声明的 EPUB。");
+      const doc = new DOMParser().parseFromString(text, "application/xml");
+      if (doc.querySelector("parsererror")) fail(`无法解析书籍结构：${path}`);
+      return doc;
+    }
+  }
+
+  async function metadata(zip, filename) {
+    const container = await zip.xml("META-INF/container.xml");
+    const rootfile = names(container, "rootfile")[0];
+    if (!rootfile) fail("书籍缺少内容清单。");
+    const packagePath = resolve("", rootfile.getAttribute("full-path") || "");
+    const packageDoc = await zip.xml(packagePath);
+    const manifest = new Map();
+    for (const item of names(packageDoc, "item")) {
+      const raw = item.getAttribute("href") || "";
+      if (/^[a-z][a-z\d+.-]*:|^\/\//i.test(raw)) continue;
+      manifest.set(item.getAttribute("id"), { href: resolve(packagePath, raw), type: item.getAttribute("media-type"), properties: (item.getAttribute("properties") || "").split(/\s+/) });
+    }
+    const spine = names(packageDoc, "spine")[0];
+    if (!spine) fail("书籍缺少阅读顺序。");
+    const chapters = [];
+    for (const ref of names(spine, "itemref")) {
+      const item = manifest.get(ref.getAttribute("idref"));
+      if (!item || !["application/xhtml+xml", "text/html"].includes(item.type)) continue;
+      const path = splitHref(item.href)[0];
+      if (!zip.entries.has(path)) fail(`章节文件不存在：${path}`);
+      chapters.push({ href: item.href, path, title: `第 ${chapters.length + 1} 节` });
+    }
+    if (!chapters.length) fail("未找到可阅读的章节。");
+    if (zip.entries.has("META-INF/encryption.xml")) {
+      const enc = await zip.xml("META-INF/encryption.xml");
+      for (const node of names(enc, "CipherReference")) {
+        if (chapters.some(c => c.path === resolve("", node.getAttribute("URI") || ""))) fail("这本书的正文受 DRM 加密保护，无法读取。");
+      }
+    }
+    let toc = [];
+    const nav = [...manifest.values()].find(item => item.properties.includes("nav"));
+    if (nav) {
+      const navDoc = await zip.xml(splitHref(nav.href)[0]);
+      const tocNav = names(navDoc, "nav").find(n => (n.getAttributeNS("http://www.idpf.org/2007/ops", "type") || "").split(/\s+/).includes("toc") || n.getAttribute("role") === "doc-toc");
+      function walk(node, depth = -1) {
+        if (["ol", "ul"].includes(node.localName)) depth++;
+        if (node.localName === "a" && node.getAttribute("href")) {
+          try {
+            const href = resolve(nav.href, node.getAttribute("href"));
+            if (zip.entries.has(splitHref(href)[0])) toc.push({ label: textOf(node) || "未命名章节", href, depth: Math.max(0, depth) });
+          } catch { /* Remote navigation entries are unavailable offline. */ }
+        }
+        for (const child of node.children) walk(child, depth);
+      }
+      if (tocNav) walk(tocNav);
+    }
+    if (!toc.length) {
+      const ncx = manifest.get(spine.getAttribute("toc")) || [...manifest.values()].find(item => item.type === "application/x-dtbncx+xml");
+      if (ncx) {
+        const doc = await zip.xml(splitHref(ncx.href)[0]);
+        function walk(node, depth = 0) {
+          for (const child of node.children) {
+            if (child.localName === "navPoint") {
+              const content = names(child, "content")[0], label = names(child, "navLabel")[0];
+              if (content) {
+                const href = resolve(ncx.href, content.getAttribute("src") || "");
+                if (zip.entries.has(splitHref(href)[0])) toc.push({ label: textOf(label) || "未命名章节", href, depth });
+              }
+              walk(child, depth + 1);
+            } else walk(child, depth);
+          }
+        }
+        walk(doc);
+      }
+    }
+    for (const chapter of chapters) chapter.title = toc.find(item => splitHref(item.href)[0] === chapter.path)?.label || chapter.title;
+    if (!toc.length) toc = chapters.map(c => ({ label: c.title, href: c.href, depth: 0 }));
+    return { title: textOf(names(packageDoc, "title")[0]) || filename.replace(/\.epub$/i, ""), author: textOf(names(packageDoc, "creator")[0]) || "未知作者", filename, chapters, toc };
+  }
+
+  const mime = path => ({ css: "text/css", svg: "image/svg+xml", jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", gif: "image/gif", webp: "image/webp", avif: "image/avif", woff: "font/woff", woff2: "font/woff2", ttf: "font/ttf", otf: "font/otf", mp3: "audio/mpeg", mp4: "video/mp4" }[path.split(".").pop().toLowerCase()] || "application/octet-stream");
+  class OfflineLibrary {
+    constructor() { this.memory = new Map(); this.active = null; this.urls = new Map(); this.generation = 0; this.persistent = true; }
+
+    async db() {
+      if (!this.dbPromise) this.dbPromise = new Promise(resolve => {
+        try {
+          const request = indexedDB.open("paper-reader-offline-v1", 1);
+          request.onupgradeneeded = () => {
+            request.result.createObjectStore("books", { keyPath: "id" });
+            request.result.createObjectStore("files");
+          };
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = () => { this.persistent = false; resolve(null); };
+          request.onblocked = () => { this.persistent = false; resolve(null); };
+        } catch { this.persistent = false; resolve(null); }
+      });
+      return this.dbPromise;
+    }
+
+    async query(store, method, ...args) {
+      const db = await this.db(); if (!db) return null;
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(store, "readonly"), request = tx.objectStore(store)[method](...args);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(new Error("浏览器无法读取书架记录。"));
+      });
+    }
+
+    async list() {
+      const saved = await this.query("books", "getAll") || [];
+      const items = new Map(saved.map(item => [item.id, item]));
+      for (const [id, entry] of this.memory) items.set(id, entry.book);
+      return [...items.values()].sort((a, b) => b.added - a.added);
+    }
+
+    async add(file) {
+      if (file.size > 100 * 1024 * 1024) fail("单本书籍不能超过 100 MB。");
+      if (!crypto.subtle) fail("当前浏览器不能直接读取本地书籍，请用新版 Edge 或 Chrome 打开这个 HTML 文件。");
+      const buffer = await file.arrayBuffer();
+      const digest = await crypto.subtle.digest("SHA-256", buffer);
+      const id = Array.from(new Uint8Array(digest), b => b.toString(16).padStart(2, "0")).join("");
+      const existing = this.memory.get(id)?.book || await this.query("books", "get", id);
+      if (existing) return existing;
+      const zip = new Zip(buffer), book = { ...await metadata(zip, file.name), id, added: Date.now() };
+      this.memory.set(id, { book, buffer });
+      const db = await this.db();
+      if (db) {
+        try {
+          await new Promise((resolve, reject) => {
+            const tx = db.transaction(["books", "files"], "readwrite");
+            tx.objectStore("books").put(book); tx.objectStore("files").put(buffer, id);
+            tx.oncomplete = resolve;
+            tx.onerror = tx.onabort = () => reject(new Error("书架保存失败"));
+          });
+          this.memory.delete(id);
+        } catch { this.persistent = false; }
+      }
+      return book;
+    }
+
+    async get(id) {
+      const entry = this.memory.get(id);
+      const book = entry?.book || await this.query("books", "get", id);
+      const buffer = entry?.buffer || await this.query("files", "get", id);
+      if (!book || !buffer) fail("未找到书籍，请重新导入原来的 EPUB 文件。");
+      return { ...book, archive: new Zip(buffer) };
+    }
+
+    activate(book) {
+      this.dispose();
+      this.active = { id: book.id, zip: book.archive };
+      delete book.archive;
+    }
+
+    dispose() {
+      this.generation++;
+      for (const url of this.urls.values()) URL.revokeObjectURL(url);
+      this.urls.clear();
+      this.active = null;
+    }
+
+    async asset(path, trail = []) {
+      path = splitHref(path)[0];
+      if (this.urls.has(path)) return this.urls.get(path);
+      if (!this.active || trail.includes(path) || trail.length > 8 || !this.active.zip.entries.has(path)) return "";
+      const generation = this.generation, zip = this.active.zip;
+      let data;
+      if (mime(path) === "text/css") data = await this.css(await zip.text(path), path, [...trail, path]);
+      else if (mime(path) === "image/svg+xml") {
+        const doc = new DOMParser().parseFromString(await zip.text(path), "image/svg+xml");
+        for (const node of doc.querySelectorAll("script,foreignObject,iframe,object,embed,style")) node.remove();
+        for (const node of doc.querySelectorAll("*")) for (const attr of [...node.attributes]) {
+          if (/^on/i.test(attr.name) || ((attr.localName === "href" || attr.localName === "src") && !attr.value.startsWith("#"))) node.removeAttributeNode(attr);
+        }
+        data = new XMLSerializer().serializeToString(doc);
+      } else data = await zip.read(path);
+      if (generation !== this.generation) return "";
+      const url = URL.createObjectURL(new Blob([data], { type: mime(path) }));
+      if (this.urls.has(path)) URL.revokeObjectURL(url); else this.urls.set(path, url);
+      return this.urls.get(path);
+    }
+
+    async css(source, base, trail = []) {
+      // Turn embedded resource references into local blobs; CSP blocks all networking.
+      source = source.replace(/\/\*[\s\S]*?\*\//g, "");
+      const imports = [...source.matchAll(/@import\s+(?:url\(\s*)?["']([^"']+)["']\s*\)?[^;]*;/gi)];
+      for (const match of imports) {
+        let replacement = "";
+        try {
+          const target = resolve(base, match[1]);
+          if (!trail.includes(target) && trail.length < 8 && this.active.zip.entries.has(target)) replacement = await this.css(await this.active.zip.text(target), target, [...trail, target]);
+        } catch { /* Ignore missing and external styles. */ }
+        source = source.replace(match[0], replacement);
+      }
+      const references = [...source.matchAll(/url\(\s*(?:"([^"]*)"|'([^']*)'|([^\s)]*))\s*\)/gi)];
+      for (const match of references) {
+        const target = match[1] ?? match[2] ?? match[3];
+        if (target.startsWith("#") || target.startsWith("data:") || target.startsWith("blob:")) continue;
+        let url = "";
+        try { url = await this.asset(resolve(base, target), trail); } catch { /* Fall back to normal text layout. */ }
+        source = source.replace(match[0], `url("${url}")`);
+      }
+      return source;
+    }
+
+    async chapter(href) {
+      if (!this.active) fail("请先打开书籍。");
+      const generation = this.generation, path = splitHref(href)[0];
+      const source = await this.active.zip.text(path);
+      // Parsing as HTML tolerates common imperfect EPUB XHTML. Nothing is attached live.
+      const doc = new DOMParser().parseFromString(source, "text/html");
+      for (const node of doc.querySelectorAll("script,iframe,frame,frameset,object,embed,base,meta,form,foreignObject")) node.remove();
+      for (const node of doc.querySelectorAll("*")) {
+        for (const attr of [...node.attributes]) if (/^on/i.test(attr.name) || ["srcdoc", "srcset", "ping", "action", "formaction"].includes(attr.name)) node.removeAttributeNode(attr);
+        if (node.hasAttribute("style")) node.setAttribute("style", await this.css(node.getAttribute("style"), path));
+        if (node.localName === "a") {
+          const raw = node.getAttribute("href") || node.getAttribute("xlink:href") || "";
+          node.removeAttribute("href"); node.removeAttribute("xlink:href"); node.removeAttribute("target");
+          if (raw) {
+            try { node.dataset.epubHref = resolve(path, raw); node.setAttribute("href", "#"); }
+            catch { node.setAttribute("title", "离线阅读不打开外部链接"); }
+          }
+        } else {
+          for (const attribute of ["src", "poster", "href", "xlink:href"]) {
+            const raw = node.getAttribute(attribute); if (!raw) continue;
+            if (raw.startsWith("#") || (/^data:image\//i.test(raw) && ["img", "image"].includes(node.localName))) continue;
+            node.removeAttribute(attribute);
+            try {
+              const url = await this.asset(resolve(path, raw));
+              if (url) node.setAttribute(attribute, url);
+            } catch { /* Missing optional resources must not prevent text from opening. */ }
+          }
+        }
+      }
+      for (const style of doc.querySelectorAll("style")) style.textContent = await this.css(style.textContent, path);
+      if (generation !== this.generation) fail("书籍已切换。");
+      const policy = doc.createElement("meta"); policy.httpEquiv = "Content-Security-Policy";
+      policy.content = "default-src 'none'; script-src 'none'; connect-src 'none'; img-src blob: data:; style-src 'unsafe-inline' blob:; font-src blob: data:; media-src blob:; object-src 'none'; base-uri 'none'; form-action 'none'";
+      doc.head.prepend(policy);
+      return "<!doctype html>\n" + doc.documentElement.outerHTML;
+    }
+  }
+
+  window.OfflineEpub = { Zip, resolve, metadata, crc32 };
+  window.offlineLibrary = new OfflineLibrary();
+})();
+
+"use strict";
+
+const $ = (id) => document.getElementById(id);
+const STORAGE_KEY = "paper-reader-v1";
+const defaults = { theme: "paper", background: "#f6f3ec", color: "#33392f", fontSize: 20, lineHeight: 1.9, width: 760, font: "serif" };
+const themes = { paper: ["#f6f3ec", "#33392f"], light: ["#ffffff", "#30372f"], green: ["#e7eddf", "#2e4031"], dark: ["#202620", "#d2d9c8"] };
+const state = { settings: { ...defaults }, books: {}, lastBook: null };
+let library = [], book = null, chapterIndex = 0, currentHref = "", pendingLocation = null, loading = false;
+let saveTimer, toastTimer, pendingBookmark, uploading = false, frameReady = false, openRequest = 0, navigationRequest = 0;
+const offline = window.offlineLibrary || null;
+const mobileLayout = matchMedia("(max-width:760px)");
+if (offline) {
+  $("storage-label").textContent = "本地书籍 · 安心阅读";
+  $("import-description").textContent = "选择 EPUB 文件，或将它拖入页面。书籍留在本机，随时接着上次读。";
+}
+if (matchMedia("(pointer:coarse)").matches) {
+  document.querySelector(".settings-note").textContent = "配色、字号与阅读位置会自动记住。上下滑动阅读，底部切换章节，专注模式可收起工具栏。";
+}
+
+function toast(message) {
+  $("toast").textContent = message;
+  $("toast").hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { $("toast").hidden = true; }, 4200);
+}
+
+function validLocation(value) {
+  return value && typeof value.href === "string" && value.href.length < 4096 && !value.href.startsWith("/") && !value.href.split("/").includes("..") && !/^[a-z][a-z\d+.-]*:/i.test(value.href);
+}
+
+function cleanLocation(value) {
+  return {
+    href: value.href, ratio: Math.max(0, Math.min(1, Number(value.ratio) || 0)),
+    anchor: Number.isInteger(value.anchor) && value.anchor >= 0 ? value.anchor : null,
+    offset: Math.max(-1, Math.min(1, Number(value.offset) || 0)),
+    chapter: Math.max(0, Number(value.chapter) || 0), total: Math.max(1, Number(value.total) || 1),
+    title: String(value.title || "书签").slice(0, 300), updated: Number(value.updated) || Date.now(),
+  };
+}
+
+function cleanSettings(value) {
+  const result = { ...defaults };
+  if (!value || typeof value !== "object") return result;
+  if (value.theme in themes || value.theme === "custom") result.theme = value.theme;
+  for (const key of ["background", "color"]) if (/^#[0-9a-f]{6}$/i.test(value[key])) result[key] = value[key];
+  for (const [key, min, max] of [["fontSize", 14, 36], ["lineHeight", 1.3, 2.6], ["width", 480, 1100]]) {
+    if (Number.isFinite(Number(value[key]))) result[key] = Math.min(max, Math.max(min, Number(value[key])));
+  }
+  if (["serif", "sans", "original"].includes(value.font)) result.font = value.font;
+  return result;
+}
+
+function mergeRecords(data, replaceSettings = true) {
+  if (!data || data.version !== 1 || !data.books || typeof data.books !== "object") throw new Error("不是有效的纸间阅读记录文件。");
+  if (replaceSettings) state.settings = cleanSettings(data.settings);
+  for (const [id, entry] of Object.entries(data.books)) {
+    if (!/^[a-f0-9]{64}$/.test(id) || !entry || typeof entry !== "object") continue;
+    const target = state.books[id] ||= { bookmarks: [] };
+    if (validLocation(entry.progress) && (!target.progress || Number(entry.progress.updated) > target.progress.updated)) target.progress = cleanLocation(entry.progress);
+    for (const mark of Array.isArray(entry.bookmarks) ? entry.bookmarks : []) {
+      if (!validLocation(mark) || typeof mark.id !== "string" || target.bookmarks.some(m => m.id === mark.id)) continue;
+      target.bookmarks.push({ ...cleanLocation(mark), id: mark.id.slice(0, 100), note: String(mark.note || "").slice(0, 200), created: Number(mark.created) || Date.now() });
+    }
+  }
+  if (typeof data.lastBook === "string" && /^[a-f0-9]{64}$/.test(data.lastBook)) state.lastBook = data.lastBook;
+}
+
+try {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) mergeRecords(JSON.parse(stored));
+} catch { setTimeout(() => toast("无法读取本地记录。你仍可阅读，并使用导出功能保存记录。"), 500); }
+
+function persist() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 1, ...state })); return true; }
+  catch { toast("浏览器无法保存记录，请使用左下角按钮导出备份。"); return false; }
+}
+
+function record() { return state.books[book.id] ||= { bookmarks: [] }; }
+
+async function api(url, options) {
+  if (offline) {
+    if (options?.method === "POST") return offline.add(options.body);
+    if (url === "/api/books") return offline.list();
+    return offline.get(url.split("/").pop());
+  }
+  let response;
+  try { response = await fetch(url, options); }
+  catch { throw new Error("暂时无法连接阅读服务，请检查网络后重试。"); }
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error || "请求失败，请重试。");
+  return data;
+}
+
+function make(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
+
+function overall(progress) {
+  return Math.min(100, Math.round(((progress.chapter || 0) + (progress.ratio || 0)) / (progress.total || 1) * 100));
+}
+
+function renderLibrary() {
+  $("book-count").textContent = library.length;
+  $("shelf-count").textContent = String(library.length).padStart(2, "0");
+  $("empty-library").hidden = library.length > 0;
+  $("library-section").hidden = library.length === 0;
+  $("book-grid").replaceChildren();
+  const colors = ["#718164", "#9b755c", "#637d82", "#8a7b92", "#a59160", "#687b89"];
+  for (const [index, item] of library.entries()) {
+    const button = make("button", "book-card");
+    const cover = make("div", "book-cover");
+    cover.style.setProperty("--cover", colors[index % colors.length]);
+    cover.append(make("strong", "", item.title), make("span", "", item.author), make("small", "", "PAPER · READING"));
+    const progress = state.books[item.id]?.progress;
+    button.append(cover, make("h3", "", item.title), make("p", "", progress ? `已读约 ${overall(progress)}% · 继续阅读` : `${item.author} · 尚未开始`));
+    const bar = make("div", "book-card-progress"), fill = make("span");
+    fill.style.width = `${progress ? overall(progress) : 0}%`; bar.append(fill); button.append(bar);
+    button.title = `阅读《${item.title}》`; button.addEventListener("click", () => openBook(item.id));
+    $("book-grid").append(button);
+  }
+}
+
+function showShelf() {
+  openRequest++;
+  saveProgress();
+  $("shelf-view").hidden = false; $("reader-view").hidden = true;
+  $("book-navigation").hidden = true; $("sidebar-welcome").hidden = false;
+  $("view-title").textContent = "我的书架"; $("view-subtitle").textContent = "让阅读，慢下来。";
+  $("bookmark-button").disabled = true; $("focus-button").disabled = true;
+  document.body.classList.remove("is-reading");
+  toggleFocus(false); closeSidebar(); toggleSettings(false);
+  state.lastBook = null; persist(); renderLibrary();
+  document.title = "纸间 · EPUB 阅读器";
+  refreshLibrary();
+}
+
+async function refreshLibrary(notify = false) {
+  const control = $("refresh-library");
+  if (control.disabled) return;
+  control.disabled = true; control.textContent = "正在刷新…";
+  try {
+    library = await api("/api/books"); renderLibrary();
+    if (notify) toast(`书架已更新，共 ${library.length} 本书。`);
+  } catch (error) { toast(error.message); }
+  finally { control.disabled = false; control.textContent = "刷新书架"; }
+}
+
+async function openBook(id) {
+  const request = ++openRequest;
+  saveProgress();
+  try {
+    const nextBook = await api(`/api/books/${id}`);
+    if (request !== openRequest) return;
+    if (offline) offline.activate(nextBook);
+    book = nextBook; frameReady = false;
+    $("shelf-view").hidden = true; $("reader-view").hidden = false;
+    document.body.classList.add("is-reading");
+    $("book-navigation").hidden = false; $("sidebar-welcome").hidden = true;
+    $("sidebar-title").textContent = book.title; $("sidebar-author").textContent = book.author;
+    $("sidebar-title").title = book.title; $("sidebar-author").title = book.author;
+    $("view-title").textContent = book.title; $("view-subtitle").textContent = book.author;
+    $("focus-button").disabled = false;
+    state.lastBook = id; persist();
+    $("toc-search").value = "";
+    renderToc(); renderBookmarks(); switchTab("toc");
+    document.title = `${book.title} · 纸间`;
+    const progress = record().progress;
+    navigate(progress?.href || book.chapters[0].href, progress || { ratio: 0 }, false);
+  } catch (error) { toast(error.message); }
+}
+
+function renderToc() {
+  if (!book) return;
+  const query = $("toc-search").value.trim().toLocaleLowerCase();
+  $("toc-list").replaceChildren();
+  for (const item of book.toc) {
+    if (query && !item.label.toLocaleLowerCase().includes(query)) continue;
+    const button = make("button", "toc-item", item.label);
+    button.style.paddingLeft = `${10 + Math.min(item.depth, 6) * 13}px`;
+    button.dataset.href = item.href;
+    button.addEventListener("click", () => navigate(item.href));
+    $("toc-list").append(button);
+  }
+  if (!$("toc-list").children.length) $("toc-list").append(make("p", "empty-marks", "没有匹配的章节。"));
+  updateActiveToc();
+}
+
+function updateActiveToc() {
+  for (const node of $("toc-list").children) {
+    if (!node.dataset.href) continue;
+    const active = node.dataset.href === currentHref || (!currentHref.includes("#") && node.dataset.href.split("#")[0] === currentHref);
+    node.classList.toggle("active", active);
+    if (active) node.setAttribute("aria-current", "location"); else node.removeAttribute("aria-current");
+  }
+}
+
+function switchTab(tab) {
+  for (const name of ["toc", "marks"]) {
+    $(`${name}-tab`).setAttribute("aria-selected", String(name === tab));
+    $(`${name}-panel`).hidden = name !== tab;
+  }
+}
+
+function bookUrl(href) {
+  const hash = href.indexOf("#"), path = hash < 0 ? href : href.slice(0, hash);
+  return `/books/${book.id}/content/${path.split("/").map(encodeURIComponent).join("/")}${hash < 0 ? "" : href.slice(hash)}`;
+}
+
+async function navigate(href, location = null, save = true) {
+  if (!book || !validLocation({ href })) return;
+  const request = ++navigationRequest;
+  if (save) saveProgress();
+  const index = book.chapters.findIndex(c => c.path === href.split("#")[0]);
+  if (index >= 0) chapterIndex = index;
+  else chapterIndex = Math.min(location?.chapter || chapterIndex, book.chapters.length - 1);
+  currentHref = href;
+  pendingLocation = location;
+  loading = true; frameReady = false;
+  $("bookmark-button").disabled = true;
+  $("chapter-loading").hidden = false;
+  $("previous-button").disabled = chapterIndex === 0;
+  $("next-button").disabled = chapterIndex === book.chapters.length - 1;
+  const tocEntry = book.toc.find(t => t.href === href);
+  $("chapter-label").textContent = `${String(chapterIndex + 1).padStart(2, "0")} / ${book.chapters.length}　${tocEntry?.label || book.chapters[chapterIndex].title}`;
+  updateActiveToc();
+  closeSidebar();
+  // Removing the old frame avoids a same-document fragment navigation missing its load event.
+  try {
+    const html = offline ? await offline.chapter(href) : null;
+    if (request !== navigationRequest) return;
+    const old = $("reader-frame"), frame = old.cloneNode(false);
+    frame.addEventListener("load", onFrameLoad);
+    if (offline) frame.srcdoc = html; else frame.src = bookUrl(href);
+    old.replaceWith(frame);
+  } catch (error) {
+    if (request !== navigationRequest) return;
+    loading = false; $("chapter-loading").hidden = true;
+    toast(`章节无法显示：${error.message}`);
+  }
+}
+
+function frameDoc() { try { return $("reader-frame").contentDocument; } catch { return null; } }
+function scrolling() { const doc = frameDoc(); return doc?.scrollingElement || doc?.documentElement; }
+function blocks() { return Array.from(frameDoc()?.querySelectorAll("p,h1,h2,h3,h4,h5,h6,li,blockquote,pre,figure,table") || []); }
+
+function getLocation() {
+  const el = scrolling();
+  if (!book || !el || !frameReady || loading) return null;
+  const max = Math.max(0, el.scrollHeight - el.clientHeight);
+  const nodes = blocks();
+  const anchor = nodes.findIndex(node => { const r = node.getBoundingClientRect(); return r.bottom > 0 && r.height > 0; });
+  const rect = anchor >= 0 ? nodes[anchor].getBoundingClientRect() : null;
+  return {
+    href: currentHref, ratio: max ? Math.min(1, Math.max(0, el.scrollTop / max)) : 0,
+    anchor: anchor >= 0 ? anchor : null, offset: rect ? Math.max(-1, Math.min(1, -rect.top / rect.height)) : 0,
+    chapter: chapterIndex, total: book.chapters.length,
+    title: book.toc.find(t => t.href === currentHref)?.label || book.chapters[chapterIndex].title,
+    updated: Date.now(),
+  };
+}
+
+function restoreLocation(location) {
+  const el = scrolling(); if (!el) return;
+  if (location) {
+    const node = Number.isInteger(location.anchor) ? blocks()[location.anchor] : null;
+    if (node) {
+      const rect = node.getBoundingClientRect();
+      el.scrollTop += rect.top + (location.offset || 0) * rect.height;
+    } else el.scrollTop = (location.ratio || 0) * Math.max(0, el.scrollHeight - el.clientHeight);
+  } else if (currentHref.includes("#")) {
+    let fragment = currentHref.slice(currentHref.indexOf("#") + 1);
+    try { fragment = decodeURIComponent(fragment); } catch { /* Keep malformed fragments literal. */ }
+    const doc = frameDoc(), target = doc.getElementById(fragment) || Array.from(doc.getElementsByName(fragment))[0];
+    if (target) target.scrollIntoView(); else el.scrollTop = 0;
+  } else el.scrollTop = 0;
+}
+
+async function onFrameLoad(event) {
+  const frame = event.currentTarget;
+  if (frame !== $("reader-frame")) return;
+  const doc = frameDoc();
+  if (!doc?.body || doc.querySelector("parsererror") || doc.contentType === "application/json") {
+    loading = false; $("chapter-loading").hidden = true;
+    toast("此章节无法显示，可能已损坏。可从目录选择其他章节。"); return;
+  }
+  applyBookStyle();
+  if (doc.fonts?.ready) await Promise.race([doc.fonts.ready, new Promise(resolve => setTimeout(resolve, 1200))]);
+  if (frame !== $("reader-frame")) return;
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    if (frame !== $("reader-frame")) return;
+    restoreLocation(pendingLocation); pendingLocation = null;
+    loading = false; frameReady = true;
+    $("chapter-loading").hidden = true; $("bookmark-button").disabled = false;
+    doc.addEventListener("scroll", () => { if (!loading) { updateProgress(); clearTimeout(saveTimer); saveTimer = setTimeout(saveProgress, 350); } }, { passive: true });
+    doc.addEventListener("click", handleBookLink, true);
+    doc.addEventListener("click", () => toggleSettings(false));
+    doc.addEventListener("keydown", handleKey);
+    saveProgress();
+  }));
+}
+
+function handleBookLink(event) {
+  const link = event.target.closest?.("a"); if (!link) return;
+  if (offline) {
+    event.preventDefault();
+    if (link.dataset.epubHref) navigate(link.dataset.epubHref);
+    return;
+  }
+  const href = link.getAttribute("href") || link.getAttribute("xlink:href"); if (!href) return;
+  event.preventDefault();
+  const url = new URL(href, $("reader-frame").src);
+  const prefix = `/books/${book.id}/content/`;
+  if (url.origin === location.origin && url.pathname.startsWith(prefix)) {
+    let path;
+    try { path = decodeURIComponent(url.pathname.slice(prefix.length)); } catch { return; }
+    if (/\.(x?html?|xml)$/i.test(path)) navigate(path + url.hash);
+    else toast("这个链接不是可阅读的章节。");
+  } else if (["https:", "http:"].includes(url.protocol)) {
+    window.open(url.href, "_blank", "noopener,noreferrer");
+  }
+}
+
+function updateProgress() {
+  const value = getLocation(); if (!value) return;
+  $("chapter-progress").value = Math.round(value.ratio * 1000);
+  $("progress-label").textContent = `本章 ${Math.round(value.ratio * 100)}%`;
+  $("overall-progress").textContent = `全书约 ${overall(value)}%`;
+}
+
+function saveProgress() {
+  clearTimeout(saveTimer);
+  if ($("reader-view").hidden) return;
+  const progress = getLocation(); if (!progress) return;
+  record().progress = progress;
+  if (persist()) $("saved-status").textContent = "阅读位置已保存";
+  updateProgress();
+}
+
+function applyBookStyle() {
+  const doc = frameDoc(); if (!doc?.documentElement) return;
+  let style = doc.getElementById("paper-reader-style");
+  if (!style) { style = doc.createElementNS("http://www.w3.org/1999/xhtml", "style"); style.id = "paper-reader-style"; (doc.head || doc.documentElement).append(style); }
+  const s = state.settings;
+  const font = s.font === "serif" ? '"Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "SimSun", Georgia, serif' : '-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif';
+  style.textContent = `
+    :root { color-scheme: ${s.theme === "dark" ? "dark" : "light"}; }
+    html { background: ${s.background} !important; color: ${s.color} !important; scroll-behavior: auto !important; overflow-x: hidden !important; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+    body { box-sizing: border-box !important; background: ${s.background} !important; color: ${s.color} !important; font-size: ${s.fontSize}px !important; line-height: ${s.lineHeight} !important; width: auto !important; max-width: ${s.width}px !important; min-width: 0 !important; margin: 0 auto !important; padding: 30px 38px 90px !important; writing-mode: horizontal-tb !important; column-count: auto !important; }
+    body * { color: inherit !important; background-color: transparent !important; line-height: ${s.lineHeight} !important; ${s.font !== "original" ? `font-family: ${font} !important;` : ""} }
+    p, li, div, span, blockquote, td { font-size: inherit !important; }
+    h1 { font-size: 1.75em !important; } h2 { font-size: 1.45em !important; } h3 { font-size: 1.2em !important; }
+    p { margin-top: .85em !important; margin-bottom: .85em !important; overflow-wrap: anywhere; }
+    a { color: ${s.theme === "dark" ? "#b7cba4" : "#627356"} !important; text-underline-offset: 3px; }
+    img, svg, video { max-width: 100% !important; height: auto; object-fit: contain; }
+    pre { white-space: pre-wrap !important; overflow-wrap: anywhere; } table { display: block; overflow-x: auto; max-width: 100% !important; }
+    ::selection { background: #a9be8680; }
+    @media(max-width:600px) { body { padding: 16px 22px 85px !important; } h1 { font-size: 1.45em !important; } }
+  `;
+}
+
+function applySettings(keepLocation = true) {
+  const position = keepLocation ? getLocation() : null;
+  const s = state.settings;
+  document.documentElement.dataset.theme = s.theme === "custom" ? (parseInt(s.background.slice(1, 3), 16) < 100 ? "dark" : "paper") : s.theme;
+  document.documentElement.style.setProperty("--bg", s.background);
+  document.documentElement.style.setProperty("--text", s.color);
+  document.querySelector('meta[name="theme-color"]').content = s.background;
+  for (const button of document.querySelectorAll(".theme-option")) {
+    button.classList.toggle("active", button.dataset.theme === s.theme);
+    button.setAttribute("aria-pressed", String(button.dataset.theme === s.theme));
+  }
+  $("background-color").value = s.background; $("text-color").value = s.color;
+  $("font-size").value = s.fontSize; $("font-size-value").textContent = `${s.fontSize} px`;
+  $("line-height").value = s.lineHeight; $("line-height-value").textContent = s.lineHeight.toFixed(1);
+  $("reading-width").value = s.width; $("reading-width-value").textContent = `${s.width} px`;
+  $("font-family").value = s.font;
+  applyBookStyle();
+  if (position) { restoreLocation(position); saveProgress(); }
+  persist();
+}
+
+function renderBookmarks() {
+  if (!book) return;
+  const marks = record().bookmarks;
+  $("mark-count").textContent = marks.length; $("marks-list").replaceChildren();
+  if (!marks.length) $("marks-list").append(make("p", "empty-marks", "还没有书签。读到喜欢的地方，点击上方书签图标，或按 B，留住这一页。"));
+  for (const mark of [...marks].sort((a, b) => b.created - a.created)) {
+    const card = make("div", "bookmark-card"), jump = make("button", "bookmark-jump");
+    jump.append(make("strong", "", mark.title));
+    if (mark.note) jump.append(make("p", "", mark.note));
+    jump.append(make("small", "", `本章 ${Math.round(mark.ratio * 100)}% · ${new Date(mark.created).toLocaleDateString("zh-CN")}`));
+    jump.addEventListener("click", () => navigate(mark.href, mark));
+    const remove = make("button", "delete-mark", "×"); remove.title = "删除书签"; remove.setAttribute("aria-label", `删除书签：${mark.note || mark.title}`);
+    remove.addEventListener("click", () => { record().bookmarks = marks.filter(m => m.id !== mark.id); persist(); renderBookmarks(); toast("已删除书签。"); });
+    card.append(jump, remove); $("marks-list").append(card);
+  }
+}
+
+function addBookmark() {
+  if ($("reader-view").hidden) return;
+  pendingBookmark = getLocation(); if (!pendingBookmark) return;
+  $("bookmark-location").textContent = `${pendingBookmark.title} · 本章 ${Math.round(pendingBookmark.ratio * 100)}%`;
+  $("bookmark-note").value = ""; $("bookmark-dialog").showModal(); $("bookmark-note").focus();
+}
+
+function syncPanels() {
+  const navigation = mobileLayout.matches && document.body.classList.contains("sidebar-open");
+  const settings = mobileLayout.matches && !$("appearance-panel").hidden;
+  $("main-content").inert = navigation || settings;
+  $("sidebar").inert = settings || (mobileLayout.matches && !navigation);
+  $("exit-focus").inert = navigation || settings;
+  $("settings-scrim").hidden = !settings;
+  $("sidebar-scrim").hidden = !navigation;
+  $("menu-button").setAttribute("aria-expanded", String(mobileLayout.matches ? navigation : !document.body.classList.contains("sidebar-collapsed") && !document.body.classList.contains("focus-mode")));
+  for (const [id, modal] of [["sidebar", navigation], ["appearance-panel", settings]]) {
+    if (modal) { $(id).setAttribute("role", "dialog"); $(id).setAttribute("aria-modal", "true"); }
+    else { $(id).removeAttribute("role"); $(id).removeAttribute("aria-modal"); }
+  }
+}
+
+function closeSidebar() {
+  const restoreFocus = $("sidebar").contains(document.activeElement) && mobileLayout.matches;
+  document.body.classList.remove("sidebar-open"); syncPanels();
+  if (restoreFocus) $("menu-button").focus();
+}
+
+function toggleSettings(show = $("appearance-panel").hidden) {
+  const changed = show === $("appearance-panel").hidden;
+  if (show) closeSidebar();
+  $("appearance-panel").hidden = !show;
+  $("appearance-button").setAttribute("aria-expanded", String(show));
+  syncPanels();
+  if (changed && show) $("close-settings").focus();
+  else if (changed && $("appearance-panel").contains(document.activeElement)) $("appearance-button").focus();
+}
+
+function toggleFocus(show = !document.body.classList.contains("focus-mode")) {
+  if ($("reader-view").hidden) show = false;
+  const position = getLocation();
+  toggleSettings(false); closeSidebar();
+  document.body.classList.toggle("focus-mode", show);
+  $("exit-focus").hidden = !show;
+  $("focus-button").setAttribute("aria-pressed", String(show));
+  syncPanels();
+  if (position) requestAnimationFrame(() => { restoreLocation(position); saveProgress(); });
+  if (mobileLayout.matches && !$("reader-view").hidden) $(show ? "exit-focus" : "focus-button").focus();
+}
+
+function handleKey(event) {
+  if (event.key === "Escape") { toggleSettings(false); closeSidebar(); toggleFocus(false); return; }
+  const modal = mobileLayout.matches && (!$("appearance-panel").hidden ? $("appearance-panel") : document.body.classList.contains("sidebar-open") ? $("sidebar") : null);
+  if (modal) {
+    if (event.key === "Tab") {
+      const items = [...modal.querySelectorAll('button:not(:disabled),a[href],input,select')].filter(el => el.getClientRects().length);
+      const first = items[0], last = items.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    }
+    return;
+  }
+  if (event.ctrlKey || event.metaKey || event.altKey || event.target.closest?.("input,select,textarea,[contenteditable=true]") || $("bookmark-dialog").open || $("reader-view").hidden) return;
+  if (event.key === "ArrowLeft" && chapterIndex > 0) { event.preventDefault(); navigate(book.chapters[chapterIndex - 1].href); }
+  if (event.key === "ArrowRight" && chapterIndex < book.chapters.length - 1) { event.preventDefault(); navigate(book.chapters[chapterIndex + 1].href); }
+  if (event.key.toLowerCase() === "b") { event.preventDefault(); addBookmark(); }
+  if (event.key.toLowerCase() === "f") { event.preventDefault(); toggleFocus(); }
+}
+
+async function importBooks(files) {
+  if (uploading) { toast("正在导入，请稍候。"); return; }
+  const epubs = [...files].filter(f => /\.epub$/i.test(f.name));
+  if (!epubs.length) { toast("请选择 .epub 格式的电子书。"); return; }
+  uploading = true; $("import-button").disabled = true; $("first-import").disabled = true;
+  let last = null, success = 0;
+  try {
+    for (const file of epubs) {
+      if (file.size > 100 * 1024 * 1024) { toast(`《${file.name}》超过 100 MB，已跳过。`); continue; }
+      toast(`正在导入《${file.name}》…`);
+      try {
+        last = await api("/api/books", { method: "POST", headers: { "Content-Type": "application/epub+zip", "X-Filename": encodeURIComponent(file.name) }, body: file });
+        success++;
+      } catch (error) { toast(error.message); }
+    }
+    library = await api("/api/books"); renderLibrary();
+    if (last) {
+      await openBook(last.id);
+      toast(offline && !offline.persistent ? "浏览器未能长期保存书籍，本次仍可阅读。请保留原 EPUB，并导出阅读记录。" : `已导入 ${success} 本书${success < epubs.length ? `，${epubs.length - success} 本未导入` : "，开始阅读吧。"}`);
+    }
+  } catch (error) { toast(error.message); }
+  finally { uploading = false; $("import-button").disabled = false; $("first-import").disabled = false; $("file-input").value = ""; }
+}
+
+$("import-button").addEventListener("click", () => $("file-input").click());
+$("first-import").addEventListener("click", () => $("file-input").click());
+$("refresh-library").addEventListener("click", () => refreshLibrary(true));
+$("file-input").addEventListener("change", event => importBooks(event.target.files));
+$("brand").addEventListener("click", event => { event.preventDefault(); showShelf(); });
+$("shelf-button").addEventListener("click", showShelf);
+$("toc-search").addEventListener("input", renderToc);
+$("toc-tab").addEventListener("click", () => switchTab("toc"));
+$("marks-tab").addEventListener("click", () => switchTab("marks"));
+$("previous-button").addEventListener("click", () => { if (chapterIndex > 0) navigate(book.chapters[chapterIndex - 1].href); });
+$("next-button").addEventListener("click", () => { if (chapterIndex < book.chapters.length - 1) navigate(book.chapters[chapterIndex + 1].href); });
+$("chapter-progress").addEventListener("input", event => {
+  const el = scrolling(); if (!el || !frameReady) return;
+  el.scrollTop = Number(event.target.value) / 1000 * Math.max(0, el.scrollHeight - el.clientHeight); saveProgress();
+});
+$("appearance-button").addEventListener("click", () => toggleSettings());
+$("close-settings").addEventListener("click", () => toggleSettings(false));
+document.addEventListener("click", event => { if (!event.target.closest("#appearance-panel,#appearance-button")) toggleSettings(false); });
+for (const button of document.querySelectorAll(".theme-option")) button.addEventListener("click", () => {
+  const name = button.dataset.theme; state.settings.theme = name;
+  [state.settings.background, state.settings.color] = themes[name]; applySettings();
+});
+for (const [id, key] of [["background-color", "background"], ["text-color", "color"]]) $(id).addEventListener("input", event => {
+  state.settings[key] = event.target.value; state.settings.theme = "custom"; applySettings();
+});
+for (const [id, key] of [["font-size", "fontSize"], ["line-height", "lineHeight"], ["reading-width", "width"]]) $(id).addEventListener("input", event => { state.settings[key] = Number(event.target.value); applySettings(); });
+$("font-family").addEventListener("change", event => { state.settings.font = event.target.value; applySettings(); });
+$("reset-settings").addEventListener("click", () => { state.settings = { ...defaults }; applySettings(); });
+$("menu-button").addEventListener("click", () => {
+  toggleSettings(false);
+  if (mobileLayout.matches) {
+    document.body.classList.toggle("sidebar-open"); syncPanels();
+    if (document.body.classList.contains("sidebar-open")) $("close-sidebar").focus();
+  } else { toggleFocus(false); document.body.classList.toggle("sidebar-collapsed"); syncPanels(); }
+});
+$("sidebar-scrim").addEventListener("click", closeSidebar);
+$("close-sidebar").addEventListener("click", closeSidebar);
+$("settings-scrim").addEventListener("click", () => toggleSettings(false));
+$("focus-button").addEventListener("click", () => toggleFocus());
+$("exit-focus").addEventListener("click", () => toggleFocus(false));
+mobileLayout.addEventListener("change", () => { closeSidebar(); syncPanels(); });
+$("bookmark-button").addEventListener("click", addBookmark);
+for (const id of ["cancel-bookmark", "cancel-bookmark-bottom"]) $(id).addEventListener("click", () => $("bookmark-dialog").close());
+$("bookmark-form").addEventListener("submit", event => {
+  event.preventDefault(); if (!pendingBookmark) return;
+  const id = typeof crypto.randomUUID === "function" ? crypto.randomUUID() : Array.from(crypto.getRandomValues(new Uint8Array(16)), b => b.toString(16).padStart(2, "0")).join("");
+  record().bookmarks.push({ ...pendingBookmark, id, note: $("bookmark-note").value.trim(), created: Date.now() });
+  persist(); renderBookmarks(); $("bookmark-dialog").close(); toast("已留下书签，下次从这里继续。");
+});
+$("backup-button").addEventListener("click", () => {
+  saveProgress();
+  const blob = new Blob([JSON.stringify({ version: 1, ...state }, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob), link = make("a"); link.href = url;
+  link.download = `纸间阅读记录-${new Date().toISOString().slice(0, 10)}.json`; link.click(); setTimeout(() => URL.revokeObjectURL(url), 10000);
+  toast(offline ? "阅读记录已导出。迁移时也请保留原来的 EPUB 文件。" : "阅读记录已导出；书籍文件保存在项目的 data 目录。");
+});
+$("restore-button").addEventListener("click", () => $("backup-input").click());
+$("backup-input").addEventListener("change", async event => {
+  const file = event.target.files[0]; if (!file) return;
+  try {
+    if (file.size > 10 * 1024 * 1024) throw new Error("阅读记录文件过大（上限 10 MB）。");
+    saveProgress(); mergeRecords(JSON.parse(await file.text())); persist(); applySettings(); renderLibrary(); renderBookmarks(); toast("已合并书签与最新阅读进度。");
+  } catch (error) { toast(`导入失败：${error.message}`); }
+  event.target.value = "";
+});
+let dragDepth = 0;
+document.addEventListener("dragenter", event => { if ([...event.dataTransfer.types].includes("Files")) { event.preventDefault(); dragDepth++; $("drop-overlay").hidden = false; } });
+document.addEventListener("dragover", event => { if ([...event.dataTransfer.types].includes("Files")) event.preventDefault(); });
+document.addEventListener("dragleave", () => { if (--dragDepth <= 0) { dragDepth = 0; $("drop-overlay").hidden = true; } });
+document.addEventListener("drop", event => { event.preventDefault(); dragDepth = 0; $("drop-overlay").hidden = true; importBooks(event.dataTransfer.files); });
+document.addEventListener("keydown", handleKey);
+window.addEventListener("pagehide", saveProgress);
+document.addEventListener("visibilitychange", () => { if (document.hidden) saveProgress(); });
+applySettings(false);
+syncPanels();
+api("/api/books").then(items => {
+  library = items; renderLibrary();
+  if (state.lastBook && library.some(item => item.id === state.lastBook)) openBook(state.lastBook);
+}).catch(error => toast(error.message));
+
+</script>
+</body>
+</html>

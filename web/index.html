@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="paper">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f3ec">
+  <title>纸间 · EPUB 阅读器</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5c-3-2-7-2-10-1v15c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1Zm0 0v15"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-mark" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m14 6-6 6 6 6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-focus" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 15v6h16v-6"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 3C8 2 2 8 5 15c4 8 16 1 15-12ZM4 21 16 9"/></symbol>
+  </defs></svg>
+
+  <aside class="sidebar" id="sidebar" aria-label="书籍导航">
+    <button id="close-sidebar" class="icon-button close-sidebar" aria-label="关闭导航"><svg><use href="#i-close"/></svg></button>
+    <a class="brand" href="#" id="brand"><span class="brand-symbol"><svg><use href="#i-book"/></svg></span><span>纸间<small>A LITTLE TIME TO READ</small></span></a>
+    <button id="shelf-button" class="shelf-button"><svg><use href="#i-book"/></svg>我的书架<span id="book-count">0</span></button>
+    <section id="book-navigation" hidden>
+      <div class="current-book"><span class="eyebrow">正在阅读</span><h2 id="sidebar-title"></h2><p id="sidebar-author"></p></div>
+      <div class="tabs" role="tablist" aria-label="导航类型">
+        <button id="toc-tab" role="tab" aria-selected="true" aria-controls="toc-panel">目录</button>
+        <button id="marks-tab" role="tab" aria-selected="false" aria-controls="marks-panel">书签 <span id="mark-count">0</span></button>
+      </div>
+      <div id="toc-panel" class="nav-panel" role="tabpanel" aria-labelledby="toc-tab"><label class="search"><span>⌕</span><input id="toc-search" placeholder="查找章节…" aria-label="查找章节"></label><nav id="toc-list" aria-label="章节目录"></nav></div>
+      <div id="marks-panel" class="nav-panel" role="tabpanel" aria-labelledby="marks-tab" hidden><div id="marks-list"></div></div>
+    </section>
+    <div id="sidebar-welcome" class="sidebar-welcome"><span class="fine-line"></span><p>书页之间，<br>安放片刻日常。</p><span>YOUR QUIET READING CORNER</span></div>
+    <div class="sidebar-bottom"><span class="local-dot"></span><span id="storage-label">服务书架 · 随时阅读</span><button id="backup-button" title="导出阅读记录" aria-label="导出阅读记录"><svg><use href="#i-upload"/></svg></button></div>
+  </aside>
+  <button class="scrim" id="sidebar-scrim" aria-label="关闭导航" hidden></button>
+
+  <main id="main-content">
+    <header class="toolbar">
+      <div class="toolbar-title"><button class="icon-button" id="menu-button" title="显示或隐藏侧栏" aria-label="显示或隐藏侧栏" aria-controls="sidebar" aria-expanded="false"><svg><use href="#i-menu"/></svg></button><div><h1 id="view-title">我的书架</h1><span id="view-subtitle">让阅读，慢下来。</span></div></div>
+      <div class="toolbar-actions">
+        <button class="icon-button" id="bookmark-button" title="添加书签（B）" aria-label="添加书签" disabled><svg><use href="#i-mark"/></svg></button>
+        <button class="text-button appearance-button" id="appearance-button" aria-expanded="false" aria-controls="appearance-panel" title="阅读设置"><span class="aa">Aa</span><span class="button-label">阅读设置</span></button>
+        <button class="icon-button" id="focus-button" title="专注模式（F），Esc 退出" aria-label="切换专注模式" disabled><svg><use href="#i-focus"/></svg></button>
+        <span class="toolbar-divider"></span><button class="primary-button compact" id="import-button"><svg><use href="#i-plus"/></svg><span>导入书籍</span></button>
+      </div>
+    </header>
+
+    <section class="shelf-view" id="shelf-view">
+      <div class="shelf-heading"><span class="eyebrow">THE READING ROOM</span><h2>给自己，<br>一页的时间<span>。</span></h2><p>从一本好书开始，让世界暂时安静下来。</p></div>
+      <div class="library-tools"><span>本浏览器 · 阅读记录独立保存</span><button id="refresh-library" class="text-button">刷新书架</button></div>
+      <div id="empty-library" class="empty-library">
+        <div class="book-illustration" aria-hidden="true"><div class="illustration-back"></div><div class="illustration-book"><span class="illustration-label">THE ART OF<br>SLOW LIVING</span><span class="illustration-title">阅读<br>是一座<br>随身的花园</span><svg><use href="#i-leaf"/></svg><span class="illustration-bottom">纸 间 · 阅 读 时 光</span></div><span class="illustration-shadow"></span></div>
+        <div class="empty-copy"><span class="eyebrow">你的私人书架</span><h3>下一段旅程，<br>从这里翻开。</h3><p id="import-description">选择手机或电脑中的 EPUB 文件。<br>书籍存入服务书架，随时打开阅读。</p><button class="primary-button" id="first-import"><svg><use href="#i-plus"/></svg>导入第一本书</button><span class="file-hint">支持 EPUB 2 / 3 · 单本最大 100 MB</span></div>
+      </div>
+      <section id="library-section" hidden><div class="section-heading"><h3>全部书籍 <span id="shelf-count"></span></h3><span>每一次翻开，都是新的相遇</span></div><div id="book-grid" class="book-grid"></div></section>
+      <div class="shelf-footnote"><span>✦</span> 不同设备、不同浏览器的进度与书签互不影响。<button id="restore-button">导入阅读记录</button></div>
+    </section>
+
+    <section id="reader-view" class="reader-view" hidden aria-label="阅读区域">
+      <div class="chapter-header"><span id="chapter-label"></span><span id="saved-status" role="status">阅读进度自动保存</span></div>
+      <div class="reader-container"><iframe id="reader-frame" title="电子书正文" sandbox="allow-same-origin"></iframe><div id="chapter-loading" class="chapter-loading" hidden>正在翻开书页…</div></div>
+      <footer class="reader-footer"><button class="text-button" id="previous-button"><svg><use href="#i-left"/></svg><span>上一章</span></button><div class="progress-control"><label for="chapter-progress"><span id="progress-label">本章 0%</span><span id="overall-progress"></span></label><input id="chapter-progress" type="range" min="0" max="1000" value="0" aria-label="当前章节阅读进度"></div><button class="text-button" id="next-button"><span>下一章</span><svg><use href="#i-right"/></svg></button></footer>
+    </section>
+  </main>
+  <button id="exit-focus" class="exit-focus" hidden>退出专注</button>
+  <button id="settings-scrim" class="settings-scrim" aria-label="关闭阅读设置" hidden></button>
+
+  <section class="appearance-panel" id="appearance-panel" aria-label="阅读设置" hidden>
+    <div class="panel-heading"><div><span class="eyebrow">MAKE IT YOURS</span><h2>舒适，刚刚好。</h2></div><button id="close-settings" class="icon-button" aria-label="关闭阅读设置"><svg><use href="#i-close"/></svg></button></div>
+    <fieldset><legend>阅读配色</legend><div class="theme-options"><button data-theme="paper" class="theme-option"><span class="swatch paper"></span>纸色</button><button data-theme="light" class="theme-option"><span class="swatch light"></span>明亮</button><button data-theme="green" class="theme-option"><span class="swatch green"></span>青苔</button><button data-theme="dark" class="theme-option"><span class="swatch dark"></span>夜间</button></div></fieldset>
+    <div class="custom-colors"><label>背景颜色<input id="background-color" type="color" value="#f6f3ec"></label><label>文字颜色<input id="text-color" type="color" value="#33392f"></label></div>
+    <label class="setting-label" for="font-size">文字大小<output id="font-size-value">20 px</output></label><input type="range" id="font-size" min="14" max="36" value="20">
+    <label class="setting-label" for="line-height">行间距<output id="line-height-value">1.9</output></label><input type="range" id="line-height" min="1.3" max="2.6" value="1.9" step="0.1">
+    <label class="setting-label" for="reading-width">正文宽度<output id="reading-width-value">760 px</output></label><input type="range" id="reading-width" min="480" max="1100" value="760" step="20">
+    <label class="setting-label" for="font-family">阅读字体</label><select id="font-family"><option value="serif">宋体 / 衬线体</option><option value="sans">黑体 / 无衬线体</option><option value="original">书籍原始字体</option></select>
+    <div class="settings-note">配色、字号与阅读位置会自动记住。<br>← → 切换章节 · B 添加书签 · F 专注阅读</div><button class="text-button reset-button" id="reset-settings">恢复默认设置</button>
+  </section>
+
+  <dialog id="bookmark-dialog"><form id="bookmark-form"><div class="panel-heading"><h2>留住这一页</h2><button type="button" class="icon-button" id="cancel-bookmark" aria-label="取消"><svg><use href="#i-close"/></svg></button></div><p id="bookmark-location"></p><label for="bookmark-note">书签备注</label><input id="bookmark-note" maxlength="200" placeholder="为这次停留写一句话（可选）"><div class="dialog-actions"><button type="button" id="cancel-bookmark-bottom" class="text-button">取消</button><button type="submit" class="primary-button">保存书签</button></div></form></dialog>
+  <div id="drop-overlay" class="drop-overlay" hidden><svg><use href="#i-book"/></svg><h2>松开，翻开一本新书。</h2><p>支持 EPUB 格式</p></div>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <input id="file-input" type="file" accept=".epub,application/epub+zip" multiple hidden>
+  <input id="backup-input" type="file" accept=".json,application/json" hidden>
+</body>
+</html>
